@@ -22,12 +22,14 @@ print(f'Количество гласных букв в слове "{word}": {wo
 
 # Вывести количество слов в предложении
 sentence = 'Мы приехали в гости'
-# ???
+print(len(sentence.split()))
 
 
 # Вывести первую букву каждого слова на отдельной строке
 sentence = 'Мы приехали в гости'
-print(len(sentence.split()))
+words = sentence.split()
+for word in words:
+    print(word[0])
 
 
 # Вывести усреднённую длину слова в предложении
