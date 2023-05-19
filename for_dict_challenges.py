@@ -12,8 +12,14 @@ students = [
     {'first_name': 'Маша'},
     {'first_name': 'Петя'},
 ]
-# ???
+names = set([x['first_name'] for x in students])
 
+for name in names:
+    name_count = 0
+    for student in students:
+        if name == student['first_name']:
+            name_count += 1
+    print(f'{name}: {name_count}')
 
 # Задание 2
 # Дан список учеников, нужно вывести самое часто повторящееся имя
@@ -25,9 +31,26 @@ students = [
     {'first_name': 'Маша'},
     {'first_name': 'Маша'},
     {'first_name': 'Оля'},
+    {'first_name': 'Оля'}
 ]
-# ???
 
+names = set([x['first_name'] for x in students])
+names_freq_dict = dict()
+
+for name in names:
+    name_count = 0
+    for student in students:
+        if name == student['first_name']:
+            name_count += 1
+    names_freq_dict[name] = name_count
+
+max_freq = max(names_freq_dict.values())
+max_freq_names_positions = [index for index, value in enumerate(list(names_freq_dict.values()))
+                            if value == max_freq]
+max_freq_names = [list(names_freq_dict.keys())[pos] for pos in max_freq_names_positions]
+max_freq_names_str = ', '.join(max_freq_names)
+
+print(f'Чаще всего встречаются имена: {max_freq_names_str} ({max_freq} раз(a))')
 
 # Задание 3
 # Есть список учеников в нескольких классах, нужно вывести самое частое имя в каждом классе.
@@ -44,15 +67,36 @@ school_students = [
         {'first_name': 'Маша'},
         {'first_name': 'Маша'},
         {'first_name': 'Оля'},
-    ],[  # это – третий класс
+    ], [  # это – третий класс
         {'first_name': 'Женя'},
         {'first_name': 'Петя'},
         {'first_name': 'Женя'},
         {'first_name': 'Саша'},
     ],
 ]
-# ???
 
+print('Самые частые имена по классам / число повторений:')
+for num, group in enumerate(school_students):
+    # формирую частотный словарь имён в классе {имя: частота}
+    students = [student['first_name'] for student in group]
+    student_unique_names = set(students)
+    student_names_freq_dict = {name: students.count(name) for name in student_unique_names}
+
+    # считаю, какое имя чаще всего встречается
+    max_freq = max(student_names_freq_dict.values())  # нахожу максимальное значение частоты
+
+    # создаю список позиций (индексов) элементов с максимальной частотой в частотном словаре имён
+    max_freq_names_positions = [
+        index
+        for index, value in enumerate(list(student_names_freq_dict.values()))
+        if value == max_freq
+    ]
+
+    # формирую список самых частых имён
+    max_freq_names = [list(student_names_freq_dict.keys())[pos] for pos in max_freq_names_positions]
+    max_freq_names_str = ', '.join(max_freq_names)
+
+    print(f'\t№{num + 1}: {max_freq_names_str} / {max_freq}')
 
 # Задание 4
 # Для каждого класса нужно вывести количество девочек и мальчиков в нём.
@@ -72,8 +116,20 @@ is_male = {
     'Миша': True,
     'Даша': False,
 }
-# ???
 
+for group in school:
+    group_name = group['class']
+    gender_composition = {
+        'ж': 0,
+        'м': 0
+    }
+    for student in group['students']:
+        if is_male[student['first_name']]:
+            gender_composition['м'] += 1
+        if not is_male[student['first_name']]:
+            gender_composition['ж'] += 1
+
+    print(f'Класс {group_name}: девочки {gender_composition["ж"]}, мальчики {gender_composition["м"]}')
 
 # Задание 5
 # По информации о учениках разных классов нужно найти класс, в котором больше всего девочек и больше всего мальчиков
@@ -91,5 +147,28 @@ is_male = {
     'Олег': True,
     'Миша': True,
 }
-# ???
 
+school_gender_by_class = dict()
+girls_by_class = dict()
+boys_by_class = dict()
+
+for group in school:
+    class_name = group['class']
+    boys = 0
+    girls = 0
+    for student in group['students']:
+        if is_male[student['first_name']]:
+            boys += 1
+        if not is_male[student['first_name']]:
+            girls += 1
+    girls_by_class[class_name] = girls
+    boys_by_class[class_name] = boys
+
+school_gender_by_class['девочек'] = girls_by_class
+school_gender_by_class['мальчиков'] = boys_by_class
+
+for gender, breakdown in school_gender_by_class.items():
+    max_gender_cnt = max(breakdown.values())
+    classes_with_max_gender_cnt = [key for key, value in breakdown.items() if value == max_gender_cnt]
+    result = ', '.join(classes_with_max_gender_cnt)
+    print(f'Больше всего {gender} в классах: {result}')
