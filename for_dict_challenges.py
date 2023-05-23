@@ -4,7 +4,7 @@ def make_freq_dict(students_list):
     return freq_dict
 
 
-def find_max_freq_items(freq_dict):
+def find_items_with_max_values(freq_dict):
     max_freq = max(freq_dict.values())
     max_freq_names = [name for name, freq in freq_dict.items() if freq == max_freq]
     return ', '.join(max_freq_names), max_freq
@@ -48,7 +48,7 @@ students = [
 ]
 
 names_freq_dict = make_freq_dict(students)
-result = find_max_freq_items(names_freq_dict)
+result = find_items_with_max_values(names_freq_dict)
 print(f'Чаще всего встречаются имена: {result[0]} ({result[1]} раз(a))')
 
 # Задание 3
@@ -79,7 +79,7 @@ school_students = [
 print('Самые частые имена по классам / число повторений:')
 for num, group in enumerate(school_students, start=1):
     group_names_freq_dict = make_freq_dict(group)
-    result = find_max_freq_items(group_names_freq_dict)
+    result = find_items_with_max_values(group_names_freq_dict)
     print(f'\t№{num}: {result[0]} / {result[1]}')
 
 # Задание 4
@@ -155,5 +155,5 @@ school_gender_by_class['мальчиков'] = boys_by_class
 
 
 for gender, breakdown in school_gender_by_class.items():
-    result = find_max_freq_items(breakdown)
+    result = find_items_with_max_values(breakdown)
     print(f'Больше всего {gender} в классах: {result[0]}')
