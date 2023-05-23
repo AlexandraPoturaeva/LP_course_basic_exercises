@@ -1,6 +1,7 @@
 # Задание 1
 # Необходимо вывести имена всех учеников из списка с новой строки
 
+print('Задание 1')
 names = ['Оля', 'Петя', 'Вася', 'Маша']
 for name in names:
     print(name)
@@ -11,6 +12,7 @@ for name in names:
 # Оля: 3
 # Петя: 4
 
+print('\nЗадание 2')
 names = ['Оля', 'Петя', 'Вася', 'Маша']
 for name in names:
     print(f'{name}: {len(name)}')
@@ -18,6 +20,7 @@ for name in names:
 # Задание 3
 # Необходимо вывести имена всех учеников из списка, рядом с именем вывести пол ученика
 
+print('\nЗадание 3')
 is_male = {
     'Оля': False,  # если False, то пол женский
     'Петя': True,  # если True, то пол мужской
@@ -26,10 +29,7 @@ is_male = {
 }
 names = ['Оля', 'Петя', 'Вася', 'Маша']
 for name in names:
-    if is_male[name]:
-        gender = 'м'
-    else:
-        gender = 'ж'
+    gender = ("woman", "man")[is_male[name]]
     print(f'{name}: {gender}')
 
 # Задание 4
@@ -39,14 +39,15 @@ for name in names:
 # Группа 1: 2 ученика.
 # Группа 2: 4 ученика.
 
+print('\nЗадание 4')
 groups = [
     ['Вася', 'Маша'],
     ['Вася', 'Маша', 'Саша', 'Женя'],
     ['Оля', 'Петя', 'Гриша'],
 ]
 print(f'Всего {len(groups)} группы.')
-for n in range(1, len(groups) + 1):
-    print(f'Группа {n}: {len(groups[n - 1])} ученика.')
+for n, group in enumerate(groups, start=1):
+    print(f'Группа {n}: {len(group)} ученика.')
 
 # Задание 5
 # Для каждой пары учеников нужно с новой строки перечислить учеников, которые в неё входят
@@ -54,11 +55,12 @@ for n in range(1, len(groups) + 1):
 # Группа 1: Вася, Маша
 # Группа 2: Оля, Петя, Гри
 
+print('\nЗадание 5')
 groups = [
     ['Вася', 'Маша'],
     ['Оля', 'Петя', 'Гриша'],
     ['Вася', 'Маша', 'Саша', 'Женя'],
 ]
-for n in range(1, len(groups) + 1):
+for n, group in enumerate(groups, start=1):
     print(f'Группа {n}:', end=' ')
-    print(*groups[n - 1], sep=", ")
+    print(*group, sep=", ")
